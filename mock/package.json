@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start":"supervisor --harmony index"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "supervisor": "^0.12.0"
+  }
+}

@@ -1,0 +1,7 @@
+# Windows files
+[*.bat]
+end_of_line = crlf
+singleQuote = true
+
+[*.js]
+trim_trailing_whitespace = true # 删除一行中的前后空格
