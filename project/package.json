@@ -15,6 +15,7 @@
     "axios": "^0.24.0",
     "mobx": "4.5.1",
     "mobx-react": "6.1.8",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^1.13.2",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-screens": "^2.16.1",
@@ -31,7 +32,10 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-amap-geolocation": "^1.1.2",
     "react-native-picker": "^4.3.7",
-    "react-native-image-crop-picker": "^0.35.1"
+    "react-native-image-crop-picker": "^0.35.1",
+    "jmessage-react-plugin": "^3.1.9",
+    "jcore-react-native": "^1.9.0",
+    "react-native-tab-navigator": "^0.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -43,8 +47,7 @@
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
-    "reactotron-react-native": "^5.0.1",
-    "react-native-linear-gradient": "^2.5.6"
+    "reactotron-react-native": "^5.0.1"
   },
   "jest": {
     "preset": "react-native"

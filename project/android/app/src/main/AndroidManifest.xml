@@ -23,6 +23,11 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <!-- 极光配置 -->
+      <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+      <meta-data android:name="JPUSH_APPKEY" android:value="b41105de1b08bfcdde106c2b"/>
+      <!-- <meta-data android.name="JPUSH_APPKEY" android.value="${APP_CHANNEL}" />
+      <meta-data android.name="JPUSH_CHANNEL" android.value="${JPUSH_APPKEY}" /> -->
     </application>
 
 </manifest>

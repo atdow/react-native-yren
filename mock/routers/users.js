@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 00:07:29
  * @LastEditors: null
- * @LastEditTime: 2021-12-30 21:42:52
+ * @LastEditTime: 2022-01-01 01:26:47
  * @Description: file description
  */
 var express = require("express");
@@ -25,8 +25,32 @@ router.post("/loginVerification", function (req, res) {
         code: 200,
         data: {
             isNew: true,
-            id: 1,
+            id: "userId1",
             token: "fkjalsjflkajsfljaklfadf",
+            msg: "成功"
+        }
+    }
+    res.send(data)
+})
+
+router.post("/loginReginfo/head", function (req, res) {
+    res.status(200)
+    let data = {
+        code: 200,
+        data: {
+            uri: "https://aaa",
+            msg: "成功"
+        }
+    }
+    res.send(data)
+})
+
+
+router.post("/loginReginfo", function (req, res) {
+    res.status(200)
+    let data = {
+        code: 200,
+        data: {
             msg: "成功"
         }
     }

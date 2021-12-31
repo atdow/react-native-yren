@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 18:05:09
  * @LastEditors: null
- * @LastEditTime: 2021-12-30 20:54:15
+ * @LastEditTime: 2022-01-01 01:25:32
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -20,6 +20,10 @@ import Toast from '../../../utils/Toast';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
 import { inject, observer } from 'mobx-react'
+import request from '../../../utils/request';
+import { ACCOUNT_CHECKHEADIMAGE } from '../../../utils/pathMap';
+import { uploadImg, registerUserInfo } from '../../../api/user'
+import JMessage from '../../../utils/JMessage';
 
 @inject("RootStore")
 @observer
@@ -35,19 +39,21 @@ class Index extends Component {
         address: ""
     }
     async componentDidMount() {
-        console.log("this.props.RootStore:", this.props.RootStore)
+        // console.log("this.props.RootStore:", this.props.RootStore)
         const res = await Geo.getCityByLocation();
         try {
             const address = res.regeocode.formatted_address
             const city = res.regeocode.addressComponent.city.replace("市", "")
-            this.setState({ address, city })
+            const lng = res.regeocode.addressComponent.streetNumber.location.split(",")[0]
+            const lat = res.regeocode.addressComponent.streetNumber.location.split(",")[1]
+            this.setState({ address, city, lng, lat })
         } catch (error) { }
+        JMessage.init()
     }
     chooseGender = (gender) => {
         this.setState({ gender })
     }
     showCityPicker = () => {
-        console.log(888)
         Picker.init({
             pickerData: CityJson,
             selectedValue: ["北京", "北京"],
@@ -68,20 +74,20 @@ class Index extends Component {
         const { nickName, birthday, city } = this.state
         if (!nickName || !birthday || !city) {
             Toast.sad("请完善信息", 2000, "center")
-            // return
+            return
         }
         const image = await ImagePicker.openPicker({
             width: 300,
             height: 400,
             cropping: true
         })
-        console.log("image:", image)
+        let overlayViewRef = null
         let overlayView = (
             <Overlay.View
                 style={{ flex: 1, backgroundColor: "#000" }}
                 modal={true}
                 overlayOpacity={0}
-                ref={v => this.overlayView = v}
+                ref={v => overlayViewRef = v}
             >
                 <View
                     style={{
@@ -105,6 +111,44 @@ class Index extends Component {
             </Overlay.View>
         )
         Overlay.show(overlayView)
+
+        const res0 = await this.uploadHeaderImg(image)
+        if (res0.code !== 200) {
+            overlayViewRef.close()
+            return
+        }
+
+        let params = { ...this.state }
+        params.header = res0.data.uri
+        const res1 = await registerUserInfo(params)
+        if (res1.code !== 200) {
+            overlayViewRef.close()
+            return
+        }
+
+        await this.jgBusiness(this.props.RootStore.userId, this.props.RootStore.mobile).then(res2 => {
+            Toast.smile("恭喜 操作成功", 2000, "center")
+            setTimeout(() => {
+                alert("跳转页面 交友页面")
+            }, 2000);
+        }).catch(err => {
+
+        }).finally(() => {
+            overlayViewRef.close()
+        })
+    }
+    jgBusiness = (username, password) => {
+        return JMessage.register(username, password)
+    }
+
+    uploadHeaderImg = (image) => {
+        let formData = new FormData();
+        formData.append("headPhoto", {
+            uri: image.path,
+            type: image.mime,
+            name: image.path.split("/").pop()
+        })
+        return uploadImg(formData)
     }
 
     render() {

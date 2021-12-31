@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:54:55
  * @LastEditors: null
- * @LastEditTime: 2021-12-30 20:43:29
+ * @LastEditTime: 2022-01-01 01:25:13
  * @Description: file description
  */
 import {
@@ -14,9 +14,9 @@ class RootStore {
     // constructor() {
     //     makeAutoObservable(this)
     // }
-    @observable mobile = '';
-    @observable token = "";
-    @observable userId = ""
+    @observable mobile = '1471111111';
+    @observable token = "123";
+    @observable userId = "userId2"
 
     @action
     setUserInfo(mobile, token, userId) {

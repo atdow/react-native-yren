@@ -135,6 +135,14 @@ android {
         vectorDrawables.useSupportLibrary = true // 
         versionCode 1
         versionName "1.0"
+        // 极光配置
+        multiDexEnabled true
+        // JPUSH_PKGNAME : applicationId,
+        manifestPlaceholders = [
+            JPUSH_APPKEY : "b41105de1b08bfcdde106c2b", //JPush 上注册的包名对应的 Appkey.
+            JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
     }
     splits {
         abi {
@@ -196,6 +204,10 @@ dependencies {
     // 支持WebP格式,包括WebP动图
     implementation "com.facebook.fresco:animated-webp:2.1.0"
     implementation "com.facebook.fresco:webpsupport:2.0.0"
+
+    // 极光配置
+    compile project(":jmessage-react-plugin")
+    compile project(":jcore-react-native")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
