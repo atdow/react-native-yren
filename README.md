@@ -1,7 +1,7 @@
-## react-native-yren
-yren dating software based on react-native.
+## 简介
+yren是一个基于react-native的交友软件，目前处于开发阶段。
 
-## start
-- set the location where the android sdk installation in `project/android/local.properties`
+## 启动
+- 在`project/android/local.properties`文件中加入本地android sdk安装路径
 - cd project && yarn
 - yarn android
