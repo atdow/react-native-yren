@@ -2,11 +2,11 @@
  * @Author: atdow
  * @Date: 2021-12-25 03:41:44
  * @LastEditors: null
- * @LastEditTime: 2021-12-30 20:48:42
+ * @LastEditTime: 2022-01-01 20:22:08
  * @Description: file description
  */
 import React, { Component } from "react";
-import { SafeAreaView, View, Text, Image, StatusBar, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, Image, StatusBar, StyleSheet, AsyncStorage } from 'react-native';
 import { pxToDp } from '../../../utils/stylesKits'
 import { Input } from "react-native-elements"
 import validator from "../../../utils/validator";
@@ -126,11 +126,15 @@ class Login extends Component {
             }
             const { data } = res
             this.props.RootStore.setUserInfo(phoneNumber, data.token, data.id)
+            AsyncStorage.setItem("userInfo", JSON.stringify({
+                mobile: phoneNumber,
+                token: data.token,
+                userId: data.id
+            }))
             if (data.isNew) {
                 this.props.navigation.navigate("UserInfo")
-                // console.log("新用户")
             } else {
-                // console.log("老用户")
+                this.props.navigation.navigate("Tabbar")
             }
         })
 

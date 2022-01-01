@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:55:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 01:30:53
+ * @LastEditTime: 2022-01-01 20:15:07
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -22,11 +22,20 @@ import Login from './pages/account/login'
 import UserInfo from './pages/account/userinfo'
 import Demo from './pages/demo'
 import Tabbar from './tabbar'
+import { inject, observer } from 'mobx-react'
 
 const Stack = createStackNavigator();
-
+@inject("RootStore")
+@observer
 class Nav extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            initalRouteName: this.props.RootStore.token ? "Tabbar" : "Login"
+        }
+    }
     render() {
+        const { initalRouteName } = this.state
         return (
             // <SafeAreaView>
             //     <Provider RootStore={RootStore} >
@@ -35,14 +44,13 @@ class Nav extends Component {
             // </SafeAreaView>
 
             <NavigationContainer>
-                <Stack.Navigator headerMode='none' initialRouteName='Tabbar'>
+                <Stack.Navigator headerMode='none' initialRouteName={initalRouteName}>
                     <Stack.Screen name='Demo' component={Demo}></Stack.Screen>
                     <Stack.Screen name='Login' component={Login}></Stack.Screen>
                     <Stack.Screen name='UserInfo' component={UserInfo}></Stack.Screen>
                     <Stack.Screen name='Tabbar' component={Tabbar}></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
-
         );
     }
 };

@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 18:05:09
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 01:25:32
+ * @LastEditTime: 2022-01-01 20:22:28
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -129,7 +129,7 @@ class Index extends Component {
         await this.jgBusiness(this.props.RootStore.userId, this.props.RootStore.mobile).then(res2 => {
             Toast.smile("恭喜 操作成功", 2000, "center")
             setTimeout(() => {
-                alert("跳转页面 交友页面")
+                this.props.navigation.navigate("Tabbar")
             }, 2000);
         }).catch(err => {
 
