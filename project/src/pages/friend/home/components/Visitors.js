@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:41:18
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 22:20:49
+ * @LastEditTime: 2022-01-02 19:37:58
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -16,7 +16,6 @@ class Index extends Component {
 
     componentDidMount() {
         getVisitors().then(res => {
-            console.log(333)
             if (res.code != 200) {
                 return
             }

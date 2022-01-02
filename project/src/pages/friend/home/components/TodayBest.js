@@ -2,14 +2,15 @@
  * @Author: atdow
  * @Date: 2022-01-02 01:56:23
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 02:31:02
+ * @LastEditTime: 2022-01-02 20:45:24
  * @Description: file description
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { getTodayBest } from '../../../../api/friends'
-import { pxToDp } from '../../../../utils/stylesKits';
-import IconFont from '../../../../components/IconFont'
+import { getTodayBest } from '@/api/friends'
+import { pxToDp } from '@/utils/stylesKits';
+import IconFont from '@/components/IconFont'
+import { themeColor } from '@/style/config'
 class Index extends Component {
     state = {
         data: {}
@@ -61,10 +62,10 @@ class Index extends Component {
                     </View>
                     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                         <View style={{ position: "relative", alignItems: "center", justifyContent: "center" }}>
-                            <IconFont name="iconxihuan" style={{ fontSize: pxToDp(40), color: "red" }}></IconFont>
+                            <IconFont name="iconxihuan" style={{ fontSize: pxToDp(40), color: themeColor }}></IconFont>
                             <Text style={{ position: "absolute", color: "white", fontSize: pxToDp(11), fontWeight: "bold" }}>{data.fateValue}</Text>
                         </View>
-                        <Text style={{ color: "red", fontSize: pxToDp(12) }}>缘分值</Text>
+                        <Text style={{ color: themeColor, fontSize: pxToDp(12) }}>缘分值</Text>
                     </View>
                 </View>
             </View>

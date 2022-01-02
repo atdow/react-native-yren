@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:45:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 02:42:44
+ * @LastEditTime: 2022-01-02 19:36:53
  * @Description: file description
  */
 import axios from "./request";
@@ -27,7 +27,7 @@ export function getRecommends(parameter) {
     return axios({
         url: '/friends/recommendation',
         method: 'post',
-        params: parameter
+        data: parameter
     })
 }
 

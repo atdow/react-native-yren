@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 19:50:00
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 13:03:44
+ * @LastEditTime: 2022-01-02 21:00:32
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -14,6 +14,9 @@ import Visitors from './components/Visitors'
 import TodayBest from './components/TodayBest'
 import { getRecommends } from '../../../api/friends'
 import IconFont from '../../../components/IconFont'
+import { Overlay } from 'teaset'
+import FilterPanel from './components/FilterPanel'
+import { themeColor } from '@/style/config'
 class Index extends Component {
     state = {
         params: {
@@ -28,15 +31,33 @@ class Index extends Component {
         recommendsData: []
     }
     componentDidMount() {
-        this.getRecommends() // test2
+        this.getRecommends()
     }
-    getRecommends = () => {
-        getRecommends(this.state.params).then(res => {
+    getRecommends = (filterParams = {}) => {
+        getRecommends({ ...this.state.params, ...filterParams }).then(res => {
             if (res.code !== 200) {
                 return
             }
             this.setState({ recommendsData: res.data })
         })
+    }
+    recommendFilterShow = () => {
+        const { page, pageSize, ...others } = this.state.params
+        let overlayViewRef = null
+        let overlayView = (
+            <Overlay.View
+                style={{ alignItems: "center", justifyContent: "center" }}
+                modal={true}
+                overlayOpacity={0.3}
+                ref={v => overlayViewRef = v}
+            >
+                <FilterPanel handleSubmitFilter={this.handleSubmitFilter} params={others} onClose={() => overlayViewRef.close()} />
+            </Overlay.View>
+        )
+        Overlay.show(overlayView)
+    }
+    handleSubmitFilter = (filterParams) => {
+        this.getRecommends(filterParams)
     }
     render() {
         const { recommendsData } = this.state
@@ -44,7 +65,7 @@ class Index extends Component {
             <HeaderImageScrollView
                 maxHeight={pxToDp(130)}
                 minHeight={pxToDp(44)}
-                headerImage={require("../../../res/headfriend.png")}
+                headerImage={require("@/res/headfriend.png")}
                 renderForeground={() => (
                     <View style={{ height: pxToDp(130), justifyContent: "center", alignItems: "center" }} >
                         <StatusBar backgroundColor={"transparent"} translucent={true}></StatusBar>
@@ -52,7 +73,7 @@ class Index extends Component {
                     </View>
                 )}
             >
-                <View style={{ height: 4000 }}>
+                <View>
                     <Visitors />
                     <View style={{ marginTop: pxToDp(10), paddingLeft: pxToDp(5), paddingRight: pxToDp(5) }}>
                         <TodayBest />
@@ -63,7 +84,7 @@ class Index extends Component {
                                 alignItems: "center"
                             }}>
                                 <Text style={{ color: "#666" }}>推荐</Text>
-                                <IconFont name="iconshaixuan" style={{ color: "#666" }}></IconFont>
+                                <IconFont onPress={this.recommendFilterShow} name="iconshaixuan" style={{ color: "#666" }}></IconFont>
                             </View>
                             <View>
                                 {recommendsData.map((item, index) =>
@@ -93,7 +114,7 @@ class Index extends Component {
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            <IconFont name="iconxihuan" style={{ color: "red", fontSize: pxToDp(30) }}></IconFont>
+                                            <IconFont name="iconxihuan" style={{ color: themeColor, fontSize: pxToDp(30) }}></IconFont>
                                             <Text style={{ color: "#666" }}>{item.fateValue}</Text>
                                         </View>
                                     </View>
