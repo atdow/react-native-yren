@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 02:44:13
+ * @LastEditTime: 2022-01-03 04:16:15
  * @Description: file description
  */
 var express = require("express");
@@ -83,6 +83,55 @@ router.post("/recommendation", function (req, res) {
             fateValue: 99
         })
     }
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
+router.get("/cards", function (req, res) {
+
+    const { pageNo = 1, pageSize = 3 } = req.query
+    console.log("req:", pageNo)
+    res.status(200)
+    let data = []
+    for (var i = 0; i < 3; i++) {
+        data.push({
+            id: 7,
+            header: pageNo == 1 ? "https://img2.baidu.com/it/u=1344806185,1573399636&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" :
+                "https://img0.baidu.com/it/u=2450392317,2129300083&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+            nick_name: pageNo == 1 ? "iu" : "lisa",
+            gender: "女",
+            age: pageNo == 1 ? 18 : 19,
+            marry: "单身",
+            education: "本科",
+            dist: 666,
+            agediff: 0,
+            fateValue: 99
+        })
+    }
+    res.send({
+        code: 200,
+        data: data,
+        pageNo: 1,
+        totalPages: 2,
+        counts: 6,
+        pageSize: 5,
+        msg: "请求成功"
+    })
+})
+
+router.post("/like", function (req, res) {
+    // console.log("req:", req.body)
+    let data = ""
+    const { type } = req.body
+    if (type === 'dislike') {
+        data = "不喜欢"
+    } else if (type === 'like') {
+        data = "喜欢"
+    }
+    res.status(200)
     res.send({
         code: 200,
         data: data,

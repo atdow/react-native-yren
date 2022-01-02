@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:14:04
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 21:30:55
+ * @LastEditTime: 2022-01-03 02:20:22
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -10,11 +10,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SVG from 'react-native-svg-uri'
 import { tanhua, near, testSoul } from '../../../../res/fonts/iconSvg'
 import { pxToDp } from '../../../../utils/stylesKits';
+import { NavigationContext } from "@react-navigation/native"
 class Index extends Component {
+    static contextType = NavigationContext
+    goPage = (pageName) => {
+        this.context.navigate(pageName)
+    }
     render() {
         return (
             <View style={styles.friendHeader}>
-                <TouchableOpacity style={styles.alignItemsCenter}>
+                <TouchableOpacity onPress={() => this.goPage("TanHua")} style={styles.alignItemsCenter}>
                     <View style={{ ...styles.friendHeaderIcon, backgroundColor: "red", }}>
                         <SVG width={25} height={25} fill='#fff' svgXmlData={tanhua}></SVG>
                     </View>
