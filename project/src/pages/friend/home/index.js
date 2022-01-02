@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 19:50:00
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 03:09:28
+ * @LastEditTime: 2022-01-02 12:46:01
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -28,7 +28,7 @@ class Index extends Component {
         recommendsData: []
     }
     componentDidMount() {
-        this.getRecommends()
+        this.getRecommends() // test
     }
     getRecommends = () => {
         getRecommends(this.state.params).then(res => {
