@@ -16,7 +16,7 @@ import { getRecommends } from '../../../api/friends'
 import IconFont from '../../../components/IconFont'
 import { Overlay } from 'teaset'
 import FilterPanel from './components/FilterPanel'
-import { themeColor } from '@/style/config'
+import { themeColor } from '@src/style/config'
 class Index extends Component {
     state = {
         params: {
@@ -65,7 +65,7 @@ class Index extends Component {
             <HeaderImageScrollView
                 maxHeight={pxToDp(130)}
                 minHeight={pxToDp(44)}
-                headerImage={require("@/res/headfriend.png")}
+                headerImage={require("@src/res/headfriend.png")}
                 renderForeground={() => (
                     <View style={{ height: pxToDp(130), justifyContent: "center", alignItems: "center" }} >
                         <StatusBar backgroundColor={"transparent"} translucent={true}></StatusBar>

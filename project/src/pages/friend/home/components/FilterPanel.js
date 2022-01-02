@@ -14,8 +14,8 @@ import { male, female } from '../../../../res/fonts/iconSvg'
 import Picker from 'react-native-picker';
 import { Slider } from 'react-native-elements'
 import CityJson from '../../../../res/citys.json'
-import SButton from '@/components/SButton'
-import { themeColor } from '@/style/config'
+import SButton from '@src/components/SButton'
+import { themeColor } from '@src/style/config'
 class Index extends Component {
     constructor(props) {
         super(props)

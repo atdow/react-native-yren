@@ -1,13 +1,18 @@
 {
-    "env": {
-      "production": {
-        "plugins": ["transform-remove-console"]
-      }
-    },
-    "plugins": [
-      ["babel-plugin-root-import",{
-        "rootPathPrefix": "@",
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-remove-console"
+      ]
+    }
+  },
+  "plugins": [
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathPrefix": "@src", // 不能用@,因为和其他依赖库产生了冲突
         "rootPathSuffix": "src/"
-      }]
+      }
     ]
+  ]
 }

@@ -7,10 +7,10 @@
  */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { getTodayBest } from '@/api/friends'
-import { pxToDp } from '@/utils/stylesKits';
-import IconFont from '@/components/IconFont'
-import { themeColor } from '@/style/config'
+import { getTodayBest } from '@src/api/friends'
+import { pxToDp } from '@src/utils/stylesKits';
+import IconFont from '@src/components/IconFont'
+import { themeColor } from '@src/style/config'
 class Index extends Component {
     state = {
         data: {}

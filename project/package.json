@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
-    "@react-navigation/native": "^5.9.0",
-    "@react-navigation/stack": "^5.12.8",
+    "@react-navigation/native": "5.9.1",
+    "@react-navigation/stack": "5.12.8",
     "axios": "^0.24.0",
-   
     "jcore-react-native": "^1.9.0",
     "jmessage-react-plugin": "^3.1.9",
     "mobx": "4.5.1",
@@ -40,12 +39,12 @@
     "teaset": "^0.7.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "7.8.4",
     "@babel/plugin-proposal-decorators": "^7.16.5",
-    "@babel/runtime": "^7.8.4",
-    "babel-plugin-root-import": "^6.6.0",
+    "@babel/runtime": "7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
     "babel-jest": "^25.1.0",
+    "babel-plugin-root-import": "^6.6.0",
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
