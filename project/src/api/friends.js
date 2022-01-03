@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:45:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-03 03:28:24
+ * @LastEditTime: 2022-01-03 18:03:41
  * @Description: file description
  */
 import axios from "./request";
@@ -44,6 +44,14 @@ export function setFriendsLike(parameter) {
         url: '/friends/like',
         method: 'post',
         data: parameter
+    })
+}
+
+export function setSearchNearby(parameter) {
+    return axios({
+        url: '/friends/search-nearby',
+        method: 'get',
+        params: parameter
     })
 }
 

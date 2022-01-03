@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:14:04
  * @LastEditors: null
- * @LastEditTime: 2022-01-03 02:20:22
+ * @LastEditTime: 2022-01-03 17:58:55
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -25,7 +25,7 @@ class Index extends Component {
                     </View>
                     <Text style={styles.friendHeaderText}>探花</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.alignItemsCenter}>
+                <TouchableOpacity onPress={() => this.goPage("SearchNearby")} style={styles.alignItemsCenter}>
                     <View style={{ ...styles.friendHeaderIcon, backgroundColor: "#2db3f8" }}>
                         <SVG width={25} height={25} fill='#fff' svgXmlData={near}></SVG>
                     </View>
