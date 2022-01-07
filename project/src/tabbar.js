@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 01:29:43
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 20:55:37
+ * @LastEditTime: 2022-01-06 22:50:39
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -14,6 +14,10 @@ import Friend from './pages/friend/home'
 import Group from './pages/group/home'
 import Message from './pages/message/home'
 import My from './pages/my/home'
+import { getUserInfo } from './api/my'
+import { inject, observer } from 'mobx-react'
+@inject("UserStore")
+@observer
 class Index extends Component {
     state = {
         selectedTab: "friend",
@@ -51,6 +55,16 @@ class Index extends Component {
                 component: <My />
             },
         ]
+    }
+    componentDidMount() {
+        getUserInfo().then(res => {
+            // console.log("res:", res)
+            if (res.code !== 200) {
+                return
+            }
+            // console.log("this.props.UserStore:", this.props.UserStore)
+            this.props.UserStore.setUser(res.data)
+        })
     }
     render() {
         const { selectedTab, pages } = this.state

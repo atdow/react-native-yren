@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:15:37
  * @LastEditors: null
- * @LastEditTime: 2022-01-03 01:54:50
+ * @LastEditTime: 2022-01-06 22:48:52
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -13,6 +13,7 @@ import {
 import Nav from './src/nav'
 import Geo from './src/utils/Geo';
 import RootStore from './src/mobx';
+import UserStore from './src/mobx/userStore';
 import { Provider } from 'mobx-react'
 import JMessage from 'jmessage-react-plugin';
 
@@ -33,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Provider RootStore={RootStore}>
+        <Provider RootStore={RootStore} UserStore={UserStore}>
           {this.state.isInitGeo ? <Nav></Nav> : <></>}
         </Provider>
       </View>

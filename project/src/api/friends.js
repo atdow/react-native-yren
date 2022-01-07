@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:45:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-03 18:03:41
+ * @LastEditTime: 2022-01-08 00:24:36
  * @Description: file description
  */
 import axios from "./request";
@@ -52,6 +52,30 @@ export function setSearchNearby(parameter) {
         url: '/friends/search-nearby',
         method: 'get',
         params: parameter
+    })
+}
+
+export function getTestSoulQuestions(parameter) {
+    return axios({
+        url: '/friends/questions',
+        method: 'get',
+        params: parameter
+    })
+}
+
+export function getTestSoulQuestionSection(parameter) {
+    return axios({
+        url: '/friends/questionSection',
+        method: 'get',
+        params: parameter
+    })
+}
+
+export function submitTestSoulQuestion(parameter) {
+    return axios({
+        url: '/friends/questionsAnswer',
+        method: 'post',
+        data: parameter
     })
 }
 

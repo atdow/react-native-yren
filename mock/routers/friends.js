@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-03 19:09:26
+ * @LastEditTime: 2022-01-08 00:28:39
  * @Description: file description
  */
 var express = require("express");
@@ -178,6 +178,137 @@ router.get("/search-nearby", function (req, res) {
             dist: Math.random(0, 1) * 800
         })
     }
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
+
+router.get("/questions", function (req, res) {
+    const { pageNo = 1, pageSize = 3 } = req.query
+    res.status(200)
+    let data = [
+        {
+            qid: 1,
+            type: "初级",
+            title: "初级灵魂题",
+            star: 2,
+            img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F21%2F20160821204304_n2HUu.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644067727&t=a94a2fa27995c701737e77e2735ecab0",
+            status: 0,
+            count: 3,
+            sort_no: 1,
+            istested: true,
+            islock: false
+        },
+        {
+            qid: 2,
+            type: "中级",
+            title: "中级灵魂题",
+            star: 2,
+            img: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201510%2F25%2F20151025185513_rQCYG.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644067751&t=1c1858032e34e1be7682525f225a0a98",
+            status: 0,
+            count: 3,
+            sort_no: 1,
+            istested: true,
+            islock: false
+        },
+        {
+            qid: 3,
+            type: "高级",
+            title: "高级灵魂题",
+            star: 3,
+            img: "https://img0.baidu.com/it/u=2650854169,1602150023&fm=26&fmt=auto",
+            status: 0,
+            count: 3,
+            sort_no: 1,
+            istested: true,
+            islock: false
+        }
+    ]
+
+    res.send({
+        code: 200,
+        data: data,
+        pageNo: 1,
+        totalPages: 1,
+        counts: 3,
+        pageSize: 5,
+        msg: "请求成功"
+    })
+})
+
+router.get("/questionSection", function (req, res) {
+    res.status(200)
+    let data = [
+        {
+            qsid: 1,
+            questionTitle: "未来生活的幸福指数跟物质和精神那个关系更大？",
+            answers: [
+                {
+                    qsid: 1,
+                    answerTitle: "跟物质关系更大",
+                    answerNo: "A"
+                },
+                {
+                    qsid: 1,
+                    answerTitle: "跟精神关系更大",
+                    answerNo: "B"
+                }
+            ]
+        },
+        {
+            qsid: 2,
+            questionTitle: "如果遇到一个你爱的人，你能接受裸婚吗？",
+            answers: [
+                {
+                    qsid: 2,
+                    answerTitle: "会",
+                    answerNo: "A"
+                },
+                {
+                    qsid: 2,
+                    answerTitle: "不会",
+                    answerNo: "B"
+                }
+            ]
+        }
+    ]
+
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
+router.post("/questionsAnswer", function (req, res) {
+    res.status(200)
+    let data = {
+        abstract: 80,
+        content: "感性动物，更加在乎恋爱中双方的感受。对生活有着相同的感触，也许经历不同...",
+        currentUser: {
+            id: 1,
+            distance: 0,
+            address: "广州市天河区",
+            age: 18,
+            amout: null,
+            birthday: "2000-01-01",
+            city: "广州",
+            email: null,
+            gender: "男",
+            guid: null,
+            lat: "23.12933",
+            lng: "113.42782",
+            marry: "单身",
+            mobile: 14716111111,
+            nick_name: "atdow",
+            education: "本科",
+            header: "https://pics1.baidu.com/feed/6d81800a19d8bc3ed7f42a8e549efe18a9d34595.jpeg?token=d3993bd6594eb3e4db794aca449aa813&s=94D3CA23442301156CADE09F0100C083",
+        }
+    }
+
     res.send({
         code: 200,
         data: data,
