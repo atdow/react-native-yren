@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-06 21:37:06
  * @LastEditors: null
- * @LastEditTime: 2022-01-08 00:30:21
+ * @LastEditTime: 2022-01-08 00:34:23
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -60,7 +60,7 @@ class Index extends Component {
     }
     chooseAnswer = (answer) => {
         const { currentIndex, questionList } = this.state
-        this.answerList.push(answer)
+        this.answerList.push(answer) //
         if (currentIndex >= questionList.length - 1) {
             submitTestSoulQuestion({
                 id: this.props.route.params.qid,
