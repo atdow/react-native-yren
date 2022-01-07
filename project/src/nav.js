@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:55:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-06 22:55:54
+ * @LastEditTime: 2022-01-08 01:53:32
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -26,6 +26,7 @@ import TanHua from './pages/friend/tanhua'
 import SearchNearby from './pages/friend/search-nearby'
 import TestSoul from './pages/friend/test-soul'
 import QuestionA from './pages/friend/test-soul/question-a'
+import TestSoulResult from './pages/friend/test-soul/test-result'
 import { inject, observer } from 'mobx-react'
 
 const Stack = createStackNavigator();
@@ -35,8 +36,8 @@ class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // initalRouteName: this.props.RootStore.token ? "Tabbar" : "Login"
-            initalRouteName: this.props.RootStore.token ? "TestSoul" : "Login"
+            initalRouteName: this.props.RootStore.token ? "Tabbar" : "Login"
+            // initalRouteName: this.props.RootStore.token ? "TestSoul" : "Login"
         }
     }
     render() {
@@ -58,6 +59,7 @@ class Nav extends Component {
                     <Stack.Screen name='SearchNearby' component={SearchNearby}></Stack.Screen>
                     <Stack.Screen name='TestSoul' component={TestSoul}></Stack.Screen>
                     <Stack.Screen name='QuestionA' component={QuestionA}></Stack.Screen>
+                    <Stack.Screen name='TestSoulResult' component={TestSoulResult}></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
         );

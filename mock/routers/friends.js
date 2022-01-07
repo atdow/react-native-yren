@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-08 00:28:39
+ * @LastEditTime: 2022-01-08 01:25:49
  * @Description: file description
  */
 var express = require("express");
@@ -286,8 +286,24 @@ router.get("/questionSection", function (req, res) {
 router.post("/questionsAnswer", function (req, res) {
     res.status(200)
     let data = {
-        abstract: 80,
-        content: "感性动物，更加在乎恋爱中双方的感受。对生活有着相同的感触，也许经历不同...",
+        content: `1、心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。
+        2、不用羡慕别人有多么幸福。每个人的感情都不顺利。    
+        3、我开得起玩笑只要你别戳中痛处      
+        4、我多高尚向自尊开了枪      
+        5、你怎么一提他的名字就不笑了.
+        6、道理都懂但是就像鱼活在水里也死在水里
+        7、不是以为我在等你只是还没找到代替你的人而已
+        8、有多痛有多牵挂成为我心头的伤疤
+        9、可能后来我们互不拖欠互不想念互不怀念.
+        10、活鱼逆流而上死鱼随波逐流 
+        11、也许我更像个骗子热衷于为你找借口来搪塞自己
+        12、情愿彼此是路人总好过最后你转身   
+        13、“也羡慕那些一沾着枕头就能安睡的人和那些决心放手后就不再回头的人” 
+        14、Ifyoudon'ttravelaround,you'dthinkthisistheworld.     
+        15、我很难想象到等我掉光了牙满头银发步履拖沓的时候谁还在我身旁。   
+        16、不厌其烦的提醒自己不去爱你，是因为我懂你不爱我。  
+        17、炎热的夏天只有你让我心凉寒冷的冬天你也没给我拥抱拿走你的外套我不需要。   
+        18、你走以后我的醉意却停留一季又一季经了万水和千山`,
         currentUser: {
             id: 1,
             distance: 0,
@@ -306,7 +322,33 @@ router.post("/questionsAnswer", function (req, res) {
             nick_name: "atdow",
             education: "本科",
             header: "https://pics1.baidu.com/feed/6d81800a19d8bc3ed7f42a8e549efe18a9d34595.jpeg?token=d3993bd6594eb3e4db794aca449aa813&s=94D3CA23442301156CADE09F0100C083",
-        }
+        },
+        extroversion: 88,
+        judgment: 98,
+        abstract: 80,
+        rational: 96,
+        silimarUser: [
+            {
+                id: 2,
+                header: girlImgList[0]
+            },
+            {
+                id: 3,
+                header: girlImgList[1]
+            },
+            {
+                id: 4,
+                header: girlImgList[2]
+            },
+            {
+                id: 5,
+                header: girlImgList[3]
+            },
+            {
+                id: 6,
+                header: girlImgList[4]
+            },
+        ]
     }
 
     res.send({
