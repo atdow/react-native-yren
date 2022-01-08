@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:55:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-08 01:53:32
+ * @LastEditTime: 2022-01-09 03:11:22
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -27,6 +27,7 @@ import SearchNearby from './pages/friend/search-nearby'
 import TestSoul from './pages/friend/test-soul'
 import QuestionA from './pages/friend/test-soul/question-a'
 import TestSoulResult from './pages/friend/test-soul/test-result'
+import FriendDetail from './pages/friend/detail'
 import { inject, observer } from 'mobx-react'
 
 const Stack = createStackNavigator();
@@ -60,6 +61,7 @@ class Nav extends Component {
                     <Stack.Screen name='TestSoul' component={TestSoul}></Stack.Screen>
                     <Stack.Screen name='QuestionA' component={QuestionA}></Stack.Screen>
                     <Stack.Screen name='TestSoulResult' component={TestSoulResult}></Stack.Screen>
+                    <Stack.Screen name='FriendDetail' component={FriendDetail}></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
         );

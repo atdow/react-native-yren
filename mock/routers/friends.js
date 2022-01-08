@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-08 01:25:49
+ * @LastEditTime: 2022-01-09 04:38:31
  * @Description: file description
  */
 var express = require("express");
@@ -354,6 +354,128 @@ router.post("/questionsAnswer", function (req, res) {
     res.send({
         code: 200,
         data: data,
+        msg: "请求成功"
+    })
+})
+
+router.get("/personalInfo", function (req, res) {
+    const { pageNo = 1, pageSize = 3 } = req.query
+    res.status(200)
+    let data = {
+        id: 2,
+        mobile: 14716111111,
+        header: girlImgList[0],
+        nick_name: "iu",
+        gender: "女",
+        age: 18,
+        marry: "单身",
+        education: "本科",
+        dist: 0,
+        agediff: 0,
+        fateValue: 99,
+        trends: [
+            {
+                tid: 3,
+                uid: 7,
+                content: "不积跬步无以至千里...",
+                start_count: 1,
+                comment_count: 0,
+                like_count: 1,
+                status: 0,
+                lng: null,
+                lat: null,
+                address: null,
+                album: [
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[0]
+                    },
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[1]
+                    }
+                ]
+            },
+            {
+                tid: 3,
+                uid: 7,
+                content: "不积跬步无以至千里...",
+                start_count: 1,
+                comment_count: 0,
+                like_count: 1,
+                status: 0,
+                lng: null,
+                lat: null,
+                address: null,
+                album: [
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[0]
+                    },
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[1]
+                    }
+                ]
+            },
+            {
+                tid: 3,
+                uid: 7,
+                content: "不积跬步无以至千里...",
+                start_count: 1,
+                comment_count: 0,
+                like_count: 1,
+                status: 0,
+                lng: null,
+                lat: null,
+                address: null,
+                album: [
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[0]
+                    },
+                    {
+                        aid: 6,
+                        tid: 3,
+                        img: girlImgList[1]
+                    }
+                ]
+            }
+        ],
+        slider: [
+            {
+                aid: 1,
+                tid: 1,
+                uid: 7,
+                img: girlImgList[0]
+            },
+            {
+                aid: 1,
+                tid: 1,
+                uid: 7,
+                img: girlImgList[1]
+            },
+            {
+                aid: 1,
+                tid: 1,
+                uid: 7,
+                img: girlImgList[2]
+            },
+        ]
+    }
+
+    res.send({
+        code: 200,
+        data: data,
+        pageNo: 1,
+        totalPages: 2,
+        counts: 3,
+        pageSize: 5,
         msg: "请求成功"
     })
 })

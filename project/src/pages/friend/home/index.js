@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 19:50:00
  * @LastEditors: null
- * @LastEditTime: 2022-01-02 21:00:32
+ * @LastEditTime: 2022-01-09 04:21:00
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -17,7 +17,9 @@ import IconFont from '../../../components/IconFont'
 import { Overlay } from 'teaset'
 import FilterPanel from './components/FilterPanel'
 import { themeColor } from '@src/style/config'
+import { NavigationContext } from '@react-navigation/native'
 class Index extends Component {
+    static contextType = NavigationContext
     state = {
         params: {
             page: 1,
@@ -88,36 +90,38 @@ class Index extends Component {
                             </View>
                             <View>
                                 {recommendsData.map((item, index) =>
-                                    <View style={{ flexDirection: "row", paddingTop: pxToDp(15), paddingBottom: pxToDp(15), borderBottomWidth: pxToDp(1), borderBottomColor: "#ccc" }}>
-                                        <View key={index} style={{ marginRight: pxToDp(10) }}>
-                                            <Image source={{ uri: item.header }}
-                                                style={{ width: pxToDp(50), height: pxToDp(50), borderRadius: pxToDp(50) }}
-                                            ></Image>
-                                        </View>
-                                        <View style={{ flex: 1, flexDirection: "row" }}>
-                                            <View style={{ flex: 3, justifyContent: "space-around" }}>
-                                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                                    <Text style={{ color: "#555" }}>{item.nick_name}</Text>
-                                                    <IconFont
-                                                        name={item.gender === "女" ? "icontanhuanv" : "icontanhuan"}
-                                                        style={{ color: item.gender === "女" ? "#b564bf" : "red", fontSize: pxToDp(18) }}
-                                                    ></IconFont>
-                                                    <Text style={{ color: "#555" }}>{item.age}岁</Text>
-                                                </View>
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <Text style={{ color: "#555" }}>{item.marry}</Text>
-                                                    <Text style={{ color: "#555" }}>|</Text>
-                                                    <Text style={{ color: "#555" }}>{item.education}</Text>
-                                                    <Text style={{ color: "#555" }}>|</Text>
-                                                    <Text style={{ color: "#555" }}>{item.agediff < 10 ? "年龄相仿" : "有点代沟"}</Text>
+                                    <TouchableOpacity onPress={() => this.context.navigate("FriendDetail", { id: item.id })}>
+                                        <View style={{ flexDirection: "row", paddingTop: pxToDp(15), paddingBottom: pxToDp(15), borderBottomWidth: pxToDp(1), borderBottomColor: "#ccc" }}>
+                                            <View key={index} style={{ marginRight: pxToDp(10) }}>
+                                                <Image source={{ uri: item.header }}
+                                                    style={{ width: pxToDp(50), height: pxToDp(50), borderRadius: pxToDp(50) }}
+                                                ></Image>
+                                            </View>
+                                            <View style={{ flex: 1, flexDirection: "row" }}>
+                                                <View style={{ flex: 3, justifyContent: "space-around" }}>
+                                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                        <Text style={{ color: "#555" }}>{item.nick_name}</Text>
+                                                        <IconFont
+                                                            name={item.gender === "女" ? "icontanhuanv" : "icontanhuan"}
+                                                            style={{ color: item.gender === "女" ? "#b564bf" : "red", fontSize: pxToDp(18) }}
+                                                        ></IconFont>
+                                                        <Text style={{ color: "#555" }}>{item.age}岁</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row" }}>
+                                                        <Text style={{ color: "#555" }}>{item.marry}</Text>
+                                                        <Text style={{ color: "#555" }}>|</Text>
+                                                        <Text style={{ color: "#555" }}>{item.education}</Text>
+                                                        <Text style={{ color: "#555" }}>|</Text>
+                                                        <Text style={{ color: "#555" }}>{item.agediff < 10 ? "年龄相仿" : "有点代沟"}</Text>
+                                                    </View>
                                                 </View>
                                             </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <IconFont name="iconxihuan" style={{ color: themeColor, fontSize: pxToDp(30) }}></IconFont>
+                                                <Text style={{ color: "#666" }}>{item.fateValue}</Text>
+                                            </View>
                                         </View>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            <IconFont name="iconxihuan" style={{ color: themeColor, fontSize: pxToDp(30) }}></IconFont>
-                                            <Text style={{ color: "#666" }}>{item.fateValue}</Text>
-                                        </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 )}
                             </View>
                         </View>

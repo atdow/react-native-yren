@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:45:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-08 00:24:36
+ * @LastEditTime: 2022-01-09 03:22:24
  * @Description: file description
  */
 import axios from "./request";
@@ -76,6 +76,14 @@ export function submitTestSoulQuestion(parameter) {
         url: '/friends/questionsAnswer',
         method: 'post',
         data: parameter
+    })
+}
+
+export function getFriendDetail(parameter) {
+    return axios({
+        url: '/friends/personalInfo',
+        method: 'get',
+        params: parameter
     })
 }
 
