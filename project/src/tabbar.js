@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 01:29:43
  * @LastEditors: null
- * @LastEditTime: 2022-01-06 22:50:39
+ * @LastEditTime: 2022-01-10 00:13:32
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -15,6 +15,7 @@ import Group from './pages/group/home'
 import Message from './pages/message/home'
 import My from './pages/my/home'
 import { getUserInfo } from './api/my'
+import JMessage from './utils/JMessage'
 import { inject, observer } from 'mobx-react'
 @inject("UserStore")
 @observer
@@ -64,6 +65,12 @@ class Index extends Component {
             }
             // console.log("this.props.UserStore:", this.props.UserStore)
             this.props.UserStore.setUser(res.data)
+            const { id, jgPwd } = res.data || {}
+            JMessage.login(id, jgPwd).then(res => {
+                // console.log("res:", res)
+            }).catch(err => {
+                // console.log("err:", err)
+            })
         })
     }
     render() {

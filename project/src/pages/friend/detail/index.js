@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-09 03:10:40
  * @LastEditors: null
- * @LastEditTime: 2022-01-09 04:58:06
+ * @LastEditTime: 2022-01-14 23:47:00
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -14,6 +14,11 @@ import { pxToDp } from '../../../utils/stylesKits';
 import IconFont from '../../../components/IconFont'
 import LinearGradient from 'react-native-linear-gradient';
 import ImageViewer from 'react-native-image-zoom-viewer'
+import JMessage from '../../../utils/JMessage';
+import { inject, observer } from 'mobx-react'
+import { Toast } from 'teaset'
+@inject("UserStore")
+@observer
 class Index extends Component {
     state = {
         userDetail: {},
@@ -65,6 +70,21 @@ class Index extends Component {
             this.params.pageNo++
             this.getDetail()
         }
+    }
+    sendLike = () => {
+        const id = this.state.userDetail.id
+        const text = this.props.UserStore.user.mobile + "喜欢了你"
+        const extras = { user: JSON.stringify(this.state.userDetail) }
+        JMessage.sendTextMessage(id, text, extras).then(res => {
+            // console.log("res:", res)
+            Toast.smile("喜欢成功", 1000, "center")
+        }).catch(err => {
+            Toast.sad("喜欢失败", 1000, "center")
+        })
+    }
+    goChat = () => {
+        const { userDetail } = this.state
+        this.props.navigation.navigate("Chat", userDetail)
     }
     render() {
         const { userDetail, trends, showAlbum, albumList, albumIndex } = this.state
@@ -126,7 +146,7 @@ class Index extends Component {
                             </View>
                         </View>
                         <View style={{ flexDirection: "row" }}>
-                            <TouchableOpacity style={{ marginRight: pxToDp(8) }}>
+                            <TouchableOpacity onPress={this.goChat} style={{ marginRight: pxToDp(8) }}>
                                 <LinearGradient
                                     colors={["#f2ab5a", "#ec7c50"]}
                                     start={{ x: 0, y: 0 }}
@@ -140,7 +160,7 @@ class Index extends Component {
                                     <Text style={{ color: "white" }}>聊一下</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginRight: pxToDp(8) }}>
+                            <TouchableOpacity onPress={this.sendLike} style={{ marginRight: pxToDp(8) }}>
                                 <LinearGradient
                                     colors={["#6d47f8", "#e56b7f"]}
                                     start={{ x: 0, y: 0 }}

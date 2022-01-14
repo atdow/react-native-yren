@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-25 03:41:44
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 20:22:08
+ * @LastEditTime: 2022-01-09 23:36:07
  * @Description: file description
  */
 import React, { Component } from "react";
@@ -12,6 +12,7 @@ import { Input } from "react-native-elements"
 import validator from "../../../utils/validator";
 import request from "../../../utils/request";
 import { ACCOUNT_LOGIN, ACCOUNT_VALIDATEVCODE } from '../../../utils/pathMap'
+import { getVerification, login } from '../../../api/account'
 import SButton from '../../../components/SButton'
 import {
     CodeField,
@@ -39,14 +40,14 @@ class Login extends Component {
     phoneNumberChangeText = (phoneNumber) => {
         this.setState({ phoneNumber })
     }
-    phoneNumberSubmitEditing = () => {
+    getVcode = () => {
         const { phoneNumber } = this.state
         const phoneValid = validator.validatePhone(phoneNumber)
         this.setState({ phoneValid })
         if (!phoneValid) {
             return
         }
-        request.post(ACCOUNT_LOGIN, { phone: phoneNumber }).then(res => {
+        getVerification({ phone: phoneNumber }).then(res => {
             // console.log("Res;", res)
             if (res.code !== 200) {
                 return
@@ -93,13 +94,14 @@ class Login extends Component {
                         inputStyle={{ color: "#333" }}
                         onChangeText={this.phoneNumberChangeText}
                         errorMessage={phoneValid ? "" : "手机号码格式不正确"}
-                        onSubmitEditing={this.phoneNumberSubmitEditing}
+                        onSubmitEditing={this.getVcode}
                     // leftIcon={{ name: "phone", color: "#333", size: pxToDp(20) }}
                     ></Input>
                 </View>
                 <View>
                     <View >
-                        <SButton onPress={this.phoneNumberSubmitEditing} style={{ width: "75%", height: pxToDp(40), alignSelf: "center", borderRadius: pxToDp(20) }}>获取验证码</SButton>
+                        <SButton onPress={this.getVcode}
+                            style={{ width: "75%", height: pxToDp(40), alignSelf: "center", borderRadius: pxToDp(20) }}>获取验证码</SButton>
                     </View>
                 </View>
             </View>
@@ -111,17 +113,18 @@ class Login extends Component {
     repGetVcode = () => {
         this.countDown()
     }
-    onVcodeSubmitEditing = () => {
+    login = () => {
         const { vcodeTxt, phoneNumber } = this.state
         if (vcodeTxt.length !== 6) {
             Toast.message("验证码不正确", 2000, "cneter")
             return
         }
-        request.post(ACCOUNT_VALIDATEVCODE, {
+        login({
             phone: phoneNumber,
             vcode: vcodeTxt
         }).then(res => {
             if (res.code !== 200) {
+                Toast.message(res.data.msg, 2000, "cneter")
                 return
             }
             const { data } = res
@@ -152,7 +155,7 @@ class Login extends Component {
                 <CodeField
                     value={vcodeTxt}
                     onChangeText={this.onVcodeChangeTxt}
-                    onSubmitEditing={this.onVcodeSubmitEditing}
+                    onSubmitEditing={this.login}
                     cellCount={6}
                     rootStyle={styles.codeFieldRoot}
                     keyboardType="number-pad"
@@ -180,10 +183,13 @@ class Login extends Component {
         return (
             <View>
                 <StatusBar backgroundColor="transparent" translucent={true}></StatusBar>
-                <Image style={{ width: "100%", height: pxToDp(200) }} source={require("../../../res/profileBackground.jpg")}></Image>
-                <View style={{ padding: pxToDp(20) }}>{showLogin ? this.renderLogin() : this.renderVcode()}</View>
+                <Image style={{ width: "100%", height: pxToDp(200) }}
+                    source={require("../../../res/profileBackground.jpg")}>
+                </Image>
+                <View style={{ padding: pxToDp(20) }}>
+                    {showLogin ? this.renderLogin() : this.renderVcode()}
+                </View>
             </View>
-
         )
     }
 }

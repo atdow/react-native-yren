@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:15:37
  * @LastEditors: null
- * @LastEditTime: 2021-12-29 23:47:24
+ * @LastEditTime: 2022-01-15 00:33:18
  * @Description: file description
  */
 package com.awesomeproject;
@@ -18,6 +18,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.BV.LinearGradient.LinearGradientPackage;
+import cn.jiguang.imui.messagelist.ReactIMUIPackage; // 极光聊天
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           // packages.add(new AMapGeolocationPackage());
+          packages.add(new ReactIMUIPackage()); // 极光聊天
           return packages;
         }
 

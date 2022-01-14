@@ -209,6 +209,9 @@ dependencies {
     compile project(":jmessage-react-plugin")
     compile project(":jcore-react-native")
 
+    // 极光聊天
+    implementation project(":aurora-imui-react-native")
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

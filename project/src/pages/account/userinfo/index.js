@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 18:05:09
  * @LastEditors: null
- * @LastEditTime: 2022-01-01 20:22:28
+ * @LastEditTime: 2022-01-10 00:07:41
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -117,7 +117,6 @@ class Index extends Component {
             overlayViewRef.close()
             return
         }
-
         let params = { ...this.state }
         params.header = res0.data.uri
         const res1 = await registerUserInfo(params)
@@ -126,7 +125,7 @@ class Index extends Component {
             return
         }
 
-        await this.jgBusiness(this.props.RootStore.userId, this.props.RootStore.mobile).then(res2 => {
+        await this.jgBusiness(this.props.RootStore.userId, `jg${this.props.RootStore.mobile}`).then(res2 => {
             Toast.smile("恭喜 操作成功", 2000, "center")
             setTimeout(() => {
                 this.props.navigation.navigate("Tabbar")
@@ -140,7 +139,6 @@ class Index extends Component {
     jgBusiness = (username, password) => {
         return JMessage.register(username, password)
     }
-
     uploadHeaderImg = (image) => {
         let formData = new FormData();
         formData.append("headPhoto", {

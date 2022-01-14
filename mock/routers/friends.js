@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-09 04:38:31
+ * @LastEditTime: 2022-01-10 00:23:34
  * @Description: file description
  */
 var express = require("express");
@@ -362,7 +362,7 @@ router.get("/personalInfo", function (req, res) {
     const { pageNo = 1, pageSize = 3 } = req.query
     res.status(200)
     let data = {
-        id: 2,
+        id: 'userId1',
         mobile: 14716111111,
         header: girlImgList[0],
         nick_name: "iu",
