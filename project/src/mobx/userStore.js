@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-06 22:23:41
  * @LastEditors: null
- * @LastEditTime: 2022-01-06 22:55:35
+ * @LastEditTime: 2022-01-15 23:22:37
  * @Description: file description
  */
 import {
@@ -10,7 +10,8 @@ import {
 } from 'mobx';
 class UserStore {
     @observable user = {
-        id: 1,
+        id: "userId1",
+        username: "userId1",
         distance: 0,
         address: "广州市天河区",
         age: 18,

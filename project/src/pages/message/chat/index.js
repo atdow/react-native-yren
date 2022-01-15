@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-14 23:44:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-15 00:14:24
+ * @LastEditTime: 2022-01-15 23:27:07
  * @Description: file description
  */
 import React, { Component } from 'react'
@@ -16,37 +16,35 @@ import {
     Platform,
 } from 'react-native'
 
-var RNFS = require('react-native-fs')
-
-var ReactNative = require('react-native')
-import IMUI from 'aurora-imui-react-native'
-var InputView = IMUI.ChatInput
-var MessageListView = IMUI.MessageList
-const AuroraIController = IMUI.AuroraIMUIController
-const window = Dimensions.get('window')
+import RNFS from 'react-native-fs' // 文件操作库
+import IMUI from 'aurora-imui-react-native' // 聊天的ui库
+import JMessage from '../../../utils/JMessage'
+import { inject, observer } from 'mobx-react'
+var InputView = IMUI.ChatInput // 聊天的ui库的输入组件
+var MessageListView = IMUI.MessageList // 消息展示列表
+const AuroraIController = IMUI.AuroraIMUIController // 总的控制中心
+const window = Dimensions.get('window') // 获取屏幕相关的信息
 
 
 var themsgid = 1
-
+// 创建各种类型的消息
 function constructNormalMessage() {
-
-    var message = {}
+    var message = {} // 消息对象
     message.msgId = themsgid.toString()
     themsgid += 1
-    message.status = "send_succeed"
-    message.isOutgoing = true
+    message.status = "send_succeed" // 消息状态
+    message.isOutgoing = true // 消息来源：发出|接收
     var date = new Date()
-    message.timeString = date.getHours() + ":" + date.getMinutes()
+    message.timeString = date.toLocaleTimeString()
     var user = {
         userId: "",
-        displayName: "replace your nickname",
-        avatarPath: "images"
+        displayName: "",
+        avatarPath: ""
     }
     if (Platform.OS === "ios") {
         user.avatarPath = RNFS.MainBundlePath + '/default_header.png'
     }
     message.fromUser = user
-
     return message
 }
 
@@ -138,7 +136,9 @@ class CustomVew extends Component {
     }
 }
 
-export default class TestRNIMUI extends Component {
+@inject("UserStore")
+@observer
+class TestRNIMUI extends Component {
     constructor(props) {
         super(props);
         let initHeight;
@@ -160,7 +160,6 @@ export default class TestRNIMUI extends Component {
         this.onMsgClick = this.onMsgClick.bind(this);
         this.messageListDidLoadEvent = this.messageListDidLoadEvent.bind(this);
     }
-
     componentDidMount() {
         /**
          * Android only
@@ -173,24 +172,55 @@ export default class TestRNIMUI extends Component {
         this.resetMenu()
         AuroraIController.addMessageListDidLoadListener(this.messageListDidLoadEvent);
     }
-
     messageListDidLoadEvent() {
         this.getHistoryMessage()
     }
-
-    getHistoryMessage() {
-        var messages = []
-        for (var index in imageUrlArray) {
-            var message = constructNormalMessage()
-            message.fromUser.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534926548887&di=f107f4f8bd50fada6c5770ef27535277&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F67%2F23%2F69i58PICP37.jpg",//1
+    // 获取历史消息
+    getHistoryMessage = async () => {
+        // console.log("props:", this.props.route.params)
+        const username = this.props.route.params.username
+        const from = 1
+        const limit = 1000
+        const history = await JMessage.getHistoryMessage(username, from, limit)
+        // console.log("history:", history)
+        // console.log("user:", this.props.UserStore.user)
+        var messages = [] // 消息数据
+        history.forEach(historyItem => {
+            var message = constructNormalMessage() // 创建消息对象
+            // 发送者头像 this.props.UserStore.user.header
+            // 接受者头像 this.props.route.params.header
+            if (historyItem.from.username === this.props.UserStore.user.id) {
+                // 当前消息是属于发送者 当前登录用户的
+                message.isOutgoing = true
+                message.fromUser.avatarPath = this.props.UserStore.user.header
+            } else {
+                message.isOutgoing = false
+                message.fromUser.avatarPath = this.props.route.params.header
+            }
+            // 消息类型
+            if (historyItem.type === 'text') {
+                message.msgType = 'text'
+                // 设置消息内容
+                message.text = historyItem.text
+            } else if (historyItem.type === 'image') {
                 message.msgType = 'image'
-            message.mediaPath = imageUrlArray[index]
+                // 设置消息内容
+                message.mediaPath = historyItem.thumbPath
+            }
+
+
+            // 带上发送时间
+            message.timeString = (new Date(historyItem.createTime)).toLocaleTimeString()
+            // 图片途径
+            // message.mediaPath = imageUrlArray[index]
+            // 聊天消息的气泡大小
             message.contentSize = { 'height': 100, 'width': 200 }
-            message.extras = { "extras": "fdfsf" }
+            // 额外数据
+            // message.extras = { "extras": "fdfsf" }
             messages.push(message)
             // AuroraIController.appendMessages([message])
             // AuroraIController.scrollToBottom(true)
-        }
+        })
         AuroraIController.appendMessages(messages)
         AuroraIController.scrollToBottom(true)
 
@@ -324,15 +354,18 @@ export default class TestRNIMUI extends Component {
         }
 
     }
-
-    onSendText = (text) => {
+    // 发送文本消息
+    onSendText = async (text) => {
         var message = constructNormalMessage()
         var evenmessage = constructNormalMessage()
-
         message.msgType = 'text'
         message.text = text
-
         AuroraIController.appendMessages([message])
+        // 极光发送消息
+        const username = this.props.route.params.username
+        const extras = { user: JSON.stringify(this.props.UserStore.user) }
+        const res = await JMessage.sendTextMessage(username, text, extras)
+        // console.log("res:", res)
     }
 
     onTakePicture = (media) => {
@@ -375,7 +408,7 @@ export default class TestRNIMUI extends Component {
         // message.duration = video.duration
         // AuroraIController.appendMessages([message])
     }
-
+    // 发送图片消息
     onSendGalleryFiles = (mediaFiles) => {
         /**
          * WARN: This callback will return original image,
@@ -388,22 +421,28 @@ export default class TestRNIMUI extends Component {
          *
          * 代码用例不做裁剪操作。
          */
-        Alert.alert('fas', JSON.stringify(mediaFiles))
-        for (index in mediaFiles) {
-            var message = constructNormalMessage()
-            if (mediaFiles[index].mediaType == "image") {
+        mediaFiles.forEach(async mediaFilesItem => {
+            var message = constructNormalMessage() // 创建消息对象
+            if (mediaFilesItem.mediaType == "image") {
                 message.msgType = "image"
             } else {
                 message.msgType = "video"
-                message.duration = mediaFiles[index].duration
+                message.duration = mediaFilesItem.duration
             }
-
-            message.mediaPath = mediaFiles[index].mediaPath
-            message.timeString = "8:00"
-            message.status = "send_going"
+            message.mediaPath = mediaFilesItem.mediaPath
+            // message.timeString = "8:00"
+            message.status = "send_going" // 消息的发送状态
             AuroraIController.appendMessages([message])
             AuroraIController.scrollToBottom(true)
-        }
+            // 极光发送信息
+            const username = this.props.route.params.username
+            const path = mediaFilesItem.mediaPath
+            const extras = { user: JSON.stringify(this.props.UserStore.user) }
+            const res = await JMessage.sendImageMessage(username, path, extras)
+            console.log("res:", res)
+            // 修改消息的状态 发送中-->发送完毕
+            AuroraIController.updateMessage({ ...message, status: "send_succeed" })
+        })
 
         this.resetMenu()
     }
@@ -471,7 +510,7 @@ export default class TestRNIMUI extends Component {
                     ref="NavigatorView">
                     <Button
                         style={styles.sendCustomBtn}
-                        title="Custom Message"
+                        title={this.props.route.params.nick_name}
                         onPress={() => {
                             if (Platform.OS === 'ios') {
                                 var message = constructNormalMessage()
@@ -532,6 +571,7 @@ export default class TestRNIMUI extends Component {
                     photoMessageRadius={5}
                     maxBubbleWidth={0.7}
                     videoDurationTextColor={"#ffffff"}
+                    dateTextColor="#666666"
                 />
                 <InputView style={this.state.inputViewLayout}
                     ref="ChatInput"
@@ -595,3 +635,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#3e83d7'
     }
 });
+
+export default TestRNIMUI

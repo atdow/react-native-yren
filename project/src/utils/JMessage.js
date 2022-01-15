@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 00:53:57
  * @LastEditors: null
- * @LastEditTime: 2022-01-10 00:17:45
+ * @LastEditTime: 2022-01-15 23:32:46
  * @Description: file description
  */
 import JMessage from "jmessage-react-plugin"
@@ -10,9 +10,9 @@ export default {
     init() {
         JMessage.init({
             appkey: "b41105de1b08bfcdde106c2b",
-            isOpenMessageRoaming: true,
+            isOpenMessageRoaming: true, // 是否开启消息漫游
             isProduction: false,
-            channel: ""
+            channel: "" // (选填)应用的渠道名称
         })
     },
     register(username, password) {
@@ -38,6 +38,40 @@ export default {
                 username,
                 type,
                 text,
+                extras
+            }, resolve, reject)
+        })
+    },
+    /**
+     * 获取历史消息
+     * @param {*} username 要获取和谁的聊天记录
+     * @param {*} from 从第几条开始获取
+     * @param {*} limit 一共要获取几条
+     * @returns
+     */
+    getHistoryMessage(username, from, limit) {
+        return new Promise((resolve, reject) => {
+            JMessage.getHistoryMessages({
+                type: "single",
+                username,
+                from,
+                limit
+            }, resolve, reject)
+        })
+    },
+    /**
+     * 发送图片信息
+     * @param {String} acceptUserName 接受者的用户名
+     * @param {String} path 图片路径
+     * @param {Object} extras 附带的额外信息
+     * @returns
+     */
+    sendImageMessage(acceptUserName, path, extras = {}) {
+        return new Promise((resolve, reject) => {
+            JMessage.sendImageMessage({
+                type: "single",
+                acceptUserName,
+                path,
                 extras
             }, resolve, reject)
         })

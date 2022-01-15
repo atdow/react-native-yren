@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-06 22:30:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-10 00:09:11
+ * @LastEditTime: 2022-01-15 23:22:29
  * @Description: file description
  */
 var express = require("express");
@@ -14,6 +14,7 @@ router.get("/userinfo", function (req, res) {
         code: 200,
         data: {
             id: 'userId1',
+            username: "userId1",
             distance: 0,
             address: "广州市天河区",
             age: 18,

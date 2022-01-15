@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-09 03:10:40
  * @LastEditors: null
- * @LastEditTime: 2022-01-14 23:47:00
+ * @LastEditTime: 2022-01-15 23:31:02
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -72,10 +72,10 @@ class Index extends Component {
         }
     }
     sendLike = () => {
-        const id = this.state.userDetail.id
-        const text = this.props.UserStore.user.mobile + "喜欢了你"
+        const acceptUserName = this.state.userDetail.username
+        const text = this.props.UserStore.user.nick_name + "喜欢了你"
         const extras = { user: JSON.stringify(this.state.userDetail) }
-        JMessage.sendTextMessage(id, text, extras).then(res => {
+        JMessage.sendTextMessage(acceptUserName, text, extras).then(res => {
             // console.log("res:", res)
             Toast.smile("喜欢成功", 1000, "center")
         }).catch(err => {
