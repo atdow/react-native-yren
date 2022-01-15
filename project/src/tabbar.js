@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 01:29:43
  * @LastEditors: null
- * @LastEditTime: 2022-01-15 22:03:35
+ * @LastEditTime: 2022-01-16 03:26:46
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -22,6 +22,7 @@ import { inject, observer } from 'mobx-react'
 class Index extends Component {
     state = {
         selectedTab: "friend",
+        // selectedTab: "group",
         pages: [
             {
                 selected: "friend",
