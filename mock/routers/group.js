@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:05:31
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 02:53:03
+ * @LastEditTime: 2022-01-16 20:03:12
  * @Description: file description
  */
 var express = require("express");
@@ -24,6 +24,7 @@ let boyImgList = [
 
 router.get("/recommend", function (req, res) {
     const { pageNo = 1, pageSize = 3 } = req.query
+    // console.log("req.query:", req.query)
     res.status(200)
     let data = []
     for (var i = 0; i < pageSize; i++) {
@@ -39,7 +40,7 @@ router.get("/recommend", function (req, res) {
                 marry: "单身",
                 education: "本科",
                 dist: 0,
-                tid: pageSize * pageNo + 1,
+                tid: pageSize * pageNo + i,
                 content: `心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利。`,
                 start_count: 1,
                 comment_count: 0,
@@ -58,6 +59,50 @@ router.get("/recommend", function (req, res) {
         totalPages: 3,
         counts: 3,
         pageSize: pageSize,
+        msg: "请求成功"
+    })
+})
+
+
+router.post("/star", function (req, res) {
+    // console.log("req:", req.body)
+    const { tid } = req.body
+    let data = {
+        start_count: 2,
+        isCancelStar: false
+    }
+
+    res.status(200)
+
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
+router.post("/like", function (req, res) {
+    // console.log("req:", req.body)
+    const { tid } = req.body
+    let data = {
+        like_count: 2,
+        isCancelLike: false
+    }
+
+    res.status(200)
+
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
+router.post("/noInterest", function (req, res) {
+    const { tid } = req.body
+    res.status(200)
+    res.send({
+        code: 200,
         msg: "请求成功"
     })
 })

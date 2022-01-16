@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2021-12-26 01:55:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-14 23:45:16
+ * @LastEditTime: 2022-01-16 20:08:21
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -29,6 +29,7 @@ import QuestionA from './pages/friend/test-soul/question-a'
 import TestSoulResult from './pages/friend/test-soul/test-result'
 import FriendDetail from './pages/friend/detail'
 import Chat from './pages/message/chat'
+import GroupRecommentComment from './pages/group/recomment/comment'
 import { inject, observer } from 'mobx-react'
 
 const Stack = createStackNavigator();
@@ -64,6 +65,7 @@ class Nav extends Component {
                     <Stack.Screen name='TestSoulResult' component={TestSoulResult}></Stack.Screen>
                     <Stack.Screen name='FriendDetail' component={FriendDetail}></Stack.Screen>
                     <Stack.Screen name='Chat' component={Chat}></Stack.Screen>
+                    <Stack.Screen name='GroupRecommentComment' component={GroupRecommentComment}></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
         );
