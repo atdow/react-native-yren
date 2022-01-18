@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 20:06:30
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 21:21:23
+ * @LastEditTime: 2022-01-18 23:50:43
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -13,20 +13,55 @@ import SButton from '../../../../components/SButton'
 import { pxToDp } from "../../../../utils/stylesKits"
 import date from '../../../../utils/date'
 import ImageViewer from 'react-native-image-zoom-viewer'
+import { groupRecommendDynamicComment, recommendDynamicCommentStar } from '../../../../api/group'
+import { Toast } from 'teaset';
 class Index extends Component {
     state = {
+        list: [],
         showAlbum: false,
         albumIndex: 0,
         albumList: []
+    }
+    params = {
+        pageNo: 1,
+        pageSize: 5
+    }
+    totalPages = 1
+    componentDidMount() {
+        this.getList()
+    }
+    getList = () => {
+        groupRecommendDynamicComment({ id: this.props.route.params.tid, ...this.params }).then(res => {
+            console.log("res:", res)
+            if (res.code !== 200) {
+                return
+            }
+            const { data = [], totalPages = 0 } = res
+            this.setState({ list: data })
+            this.totalPages = totalPages
+        })
     }
     handleShowAlbum = (item, albumIndex) => {
         const albumList = item.images.map((albumItem) => ({ url: albumItem }))
         const showAlbum = true
         this.setState({ albumList, albumIndex, showAlbum })
     }
+    star = (cid, index) => {
+        recommendDynamicCommentStar({ id: cid }).then(res => {
+            console.log("res:", res)
+            if (res.code !== 200) {
+                return
+            }
+            const { star_count = 0 } = res.data
+            const { list } = this.state
+            list[index].star_count = star_count
+            this.setState({ list })
+            Toast.smile("点赞成功", 2000, 'center')
+        })
+    }
     render() {
         // console.log("props:", this.props.route.params)
-        const { showAlbum, albumList, albumIndex } = this.state
+        const { list, showAlbum, albumList, albumIndex } = this.state
         let item = this.props.route.params
         return (
             <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -82,6 +117,35 @@ class Index extends Component {
                                 textStyle={{ fontSize: pxToDp(10) }}
                                 style={styles.publishCommentBtn}>发表评论</SButton>
                         </View>
+                    </View>
+                    <View>
+                        {list.map((listItem, listIndex) => <View key={listIndex}>
+                            <View style={{
+                                flexDirection: "row", paddingTop: pxToDp(5), paddingBottom: pxToDp(10),
+                                borderBottomColor: "#ccc", borderBottomWidth: pxToDp(1)
+                            }}>
+                                <Image source={{ uri: listItem.header }}
+                                    style={{ width: pxToDp(40), height: pxToDp(40), borderRadius: pxToDp(40), marginRight: pxToDp(10) }}
+                                ></Image>
+                                <View style={{ flex: 1 }}>
+                                    <View>
+                                        <Text style={{ color: "#666" }}>{listItem.nick_name}</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                                            <Text style={{ color: "#666", fontSize: pxToDp(13) }}>{date(listItem.create_time).format("YYYY-MM-DD HH:mm:ss")}</Text>
+                                            <TouchableOpacity
+                                                onPress={this.star.bind(this, listItem.cid, listIndex)}
+                                                style={{ flexDirection: "row", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+                                                <IconFont name="icondianzan-o" style={{ color: "#666", fontSize: pxToDp(13) }}></IconFont>
+                                                <Text style={{ color: "#666" }}>{listItem.star_count}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <Text>{listItem.content}</Text>
+                                    </View>
+
+                                </View>
+                            </View>
+                        </View>)}
                     </View>
                 </View>
                 <Modal visible={showAlbum} transparent={true}>

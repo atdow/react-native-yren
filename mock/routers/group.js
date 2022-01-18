@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:05:31
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 20:03:12
+ * @LastEditTime: 2022-01-18 23:47:46
  * @Description: file description
  */
 var express = require("express");
@@ -106,5 +106,50 @@ router.post("/noInterest", function (req, res) {
         msg: "请求成功"
     })
 })
+
+router.get("/comment", function (req, res) {
+    const { pageNo = 1, pageSize = 3 } = req.query
+    res.status(200)
+    let data = []
+    for (var i = 0; i < pageSize; i++) {
+        data.push({
+            cid: 12,
+            content: `心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利。`,
+            create_time: "2021-11-11T07:22:22.000Z",
+            header: girlImgList[0],
+            nick_name: "iu",
+            parent_cid: 0,
+            star_count: 1,
+            tid: 5,
+            uid: 'userId2',
+            username: "userId2",
+        })
+    }
+
+
+    res.send({
+        code: 200,
+        data: data,
+        pageNo: 1,
+        totalPages: 2,
+        counts: 3,
+        pageSize,
+        msg: "请求成功"
+    })
+})
+
+router.get("/comment/star", function (req, res) {
+    res.status(200)
+    let data = {
+        star_count: 2
+    }
+
+    res.send({
+        code: 200,
+        data: data,
+        msg: "请求成功"
+    })
+})
+
 
 module.exports = router;

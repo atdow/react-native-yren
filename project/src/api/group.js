@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:02:52
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 19:39:05
+ * @LastEditTime: 2022-01-18 23:44:38
  * @Description: file description
  */
 import axios from "./request";
@@ -36,5 +36,21 @@ export function groupRecommendNoInterest(parameter) {
         url: '/group/noInterest',
         method: 'post',
         data: parameter
+    })
+}
+
+export function groupRecommendDynamicComment(parameter) {
+    return axios({
+        url: '/group/comment',
+        method: 'get',
+        params: parameter
+    })
+}
+
+export function recommendDynamicCommentStar(parameter) {
+    return axios({
+        url: '/group/comment/star',
+        method: 'get',
+        params: parameter
     })
 }
