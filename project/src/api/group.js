@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:02:52
  * @LastEditors: null
- * @LastEditTime: 2022-01-18 23:44:38
+ * @LastEditTime: 2022-01-19 00:12:53
  * @Description: file description
  */
 import axios from "./request";
@@ -52,5 +52,13 @@ export function recommendDynamicCommentStar(parameter) {
         url: '/group/comment/star',
         method: 'get',
         params: parameter
+    })
+}
+
+export function submitGroupRecommend(parameter) {
+    return axios({
+        url: '/group/comment/submit',
+        method: 'post',
+        data: parameter
     })
 }

@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:05:31
  * @LastEditors: null
- * @LastEditTime: 2022-01-18 23:47:46
+ * @LastEditTime: 2022-01-19 00:22:30
  * @Description: file description
  */
 var express = require("express");
@@ -41,6 +41,7 @@ router.get("/recommend", function (req, res) {
                 education: "本科",
                 dist: 0,
                 tid: pageSize * pageNo + i,
+                cid: pageSize * pageNo + i,
                 content: `心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利。`,
                 start_count: 1,
                 comment_count: 0,
@@ -132,7 +133,7 @@ router.get("/comment", function (req, res) {
         data: data,
         pageNo: 1,
         totalPages: 2,
-        counts: 3,
+        counts: pageSize * 2,
         pageSize,
         msg: "请求成功"
     })
@@ -147,6 +148,19 @@ router.get("/comment/star", function (req, res) {
     res.send({
         code: 200,
         data: data,
+        msg: "请求成功"
+    })
+})
+
+router.post("/comment/submit", function (req, res) {
+    res.status(200)
+    // let data = {
+    //     star_count: 2
+    // }
+
+    res.send({
+        code: 200,
+        // data: data,
         msg: "请求成功"
     })
 })
