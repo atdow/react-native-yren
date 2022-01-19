@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 20:06:30
  * @LastEditors: null
- * @LastEditTime: 2022-01-19 00:38:32
+ * @LastEditTime: 2022-01-19 21:30:17
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -16,7 +16,9 @@ import ImageViewer from 'react-native-image-zoom-viewer'
 import { groupRecommendDynamicComment, recommendDynamicCommentStar, submitGroupRecommend } from '../../../../api/group'
 import { Toast } from 'teaset';
 import LinearGradient from 'react-native-linear-gradient'
+import { NavigationContext } from '@react-navigation/native'
 class Index extends Component {
+    static contextType = NavigationContext
     state = {
         list: [],
         counts: 0,
@@ -234,18 +236,16 @@ class Index extends Component {
                     </TouchableOpacity>
                 </Modal>
                 <TouchableOpacity
-                    style={{ position: "absolute", right: "10%", bottom: "10%" }}
+                    onPress={() => this.context.navigate("GroupRecommentCommentPublish")}
+                    style={styles.publishBtnContainer}
                 >
                     <LinearGradient
                         colors={['#da6c8b', '#9b65cc']}
                         star={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
-                        style={{
-                            width: pxToDp(60), height: pxToDp(60), borderRadius: pxToDp(30),
-                            alignItems: "center", justifyContent: "center"
-                        }}
+                        style={styles.publishBtn}
                     >
-                        <Text style={{ color: "white", fontSize: pxToDp(16) }}>发布</Text>
+                        <Text style={styles.publishBtnText}>发布</Text>
                     </LinearGradient>
                 </TouchableOpacity>
             </>
@@ -306,6 +306,22 @@ const styles = StyleSheet.create({
         width: pxToDp(80),
         height: pxToDp(20),
         borderRadius: pxToDp(10)
+    },
+    publishBtnContainer: {
+        position: "absolute",
+        right: "10%",
+        bottom: "10%"
+    },
+    publishBtn: {
+        width: pxToDp(60),
+        height: pxToDp(60),
+        borderRadius: pxToDp(30),
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    publishBtnText: {
+        color: "white",
+        fontSize: pxToDp(16)
     }
 })
 export default Index
