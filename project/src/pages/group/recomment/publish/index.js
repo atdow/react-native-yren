@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-19 21:25:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-24 23:32:03
+ * @LastEditTime: 2022-01-30 00:20:46
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -14,6 +14,7 @@ import Geo from '../../../../utils/Geo'
 import Toast from '../../../../utils/Toast'
 import ImagePicker from 'react-native-image-picker';
 import { ActionSheet } from 'teaset'
+import Emotion from '../../../../components/Emotion'
 class Index extends Component {
     constructor() {
         super();
@@ -24,7 +25,8 @@ class Index extends Component {
             latitude: "",
             location: "",
             imageCotent: [],
-            tmpImgList: []
+            tmpImgList: [],
+            showEmotion: false
         }
     }
     setInputFocus = () => {
@@ -89,7 +91,6 @@ class Index extends Component {
     }
     removeImage = (index) => {
         const imgDelete = () => {
-            console.log("触发")
             let { tmpImgList } = this.state
             tmpImgList.splice(index, 1)
             this.setState({ tmpImgList })
@@ -99,8 +100,14 @@ class Index extends Component {
         ]
         ActionSheet.show(opts, { title: "取消" })
     }
+    emotionSelect = (value) => {
+        this.setState({ textContent: this.state.textContent + value.key })
+    }
+    showEmotionChange = () => {
+        this.setState({ showEmotion: !this.state.showEmotion })
+    }
     render() {
-        const { textContent, location, tmpImgList } = this.state
+        const { textContent, location, tmpImgList, showEmotion } = this.state
         return (
             <View style={{ flex: 1, backgroundColor: "white" }}>
                 <SNav
@@ -149,10 +156,13 @@ class Index extends Component {
                         style={{ marginLeft: pxToDp(20), marginRight: pxToDp(20) }}>
                         <IconFont name="icontupian" style={{ fontSize: pxToDp(30), color: "#666" }}></IconFont>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ marginLeft: pxToDp(20), marginRight: pxToDp(20) }}>
+                    <TouchableOpacity
+                        onPress={this.showEmotionChange}
+                        style={{ marginLeft: pxToDp(20), marginRight: pxToDp(20) }}>
                         <IconFont name="iconbiaoqing" style={{ fontSize: pxToDp(30), color: "#666" }}></IconFont>
                     </TouchableOpacity>
                 </View>
+                {showEmotion ? <Emotion onPress={this.emotionSelect} /> : <></>}
             </View>
         )
     }
