@@ -235,19 +235,6 @@ class Index extends Component {
                         </View>
                     </TouchableOpacity>
                 </Modal>
-                <TouchableOpacity
-                    onPress={() => this.context.navigate("GroupRecommentCommentPublish")}
-                    style={styles.publishBtnContainer}
-                >
-                    <LinearGradient
-                        colors={['#da6c8b', '#9b65cc']}
-                        star={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                        style={styles.publishBtn}
-                    >
-                        <Text style={styles.publishBtnText}>发布</Text>
-                    </LinearGradient>
-                </TouchableOpacity>
             </>
         )
     }
@@ -307,21 +294,5 @@ const styles = StyleSheet.create({
         height: pxToDp(20),
         borderRadius: pxToDp(10)
     },
-    publishBtnContainer: {
-        position: "absolute",
-        right: "10%",
-        bottom: "10%"
-    },
-    publishBtn: {
-        width: pxToDp(60),
-        height: pxToDp(60),
-        borderRadius: pxToDp(30),
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    publishBtnText: {
-        color: "white",
-        fontSize: pxToDp(16)
-    }
 })
 export default Index

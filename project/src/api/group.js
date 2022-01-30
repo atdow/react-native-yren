@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:02:52
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 16:54:36
+ * @LastEditTime: 2022-01-30 22:45:39
  * @Description: file description
  */
 import axios from "./request";
@@ -68,5 +68,13 @@ export function submitGroupDynamic(parameter) {
         url: '/group/trend/submit',
         method: 'post',
         data: parameter
+    })
+}
+
+export function getGroupLatest(parameter) {
+    return axios({
+        url: '/group/latest',
+        method: 'get',
+        params: parameter
     })
 }

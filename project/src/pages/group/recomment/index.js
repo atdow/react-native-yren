@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 01:59:40
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 17:57:40
+ * @LastEditTime: 2022-01-30 22:44:57
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -14,6 +14,7 @@ import date from '../../../utils/date'
 import { inject, observer } from 'mobx-react'
 import { Toast, ActionSheet } from 'teaset'
 import JMessage from '../../../utils/JMessage';
+import LinearGradient from 'react-native-linear-gradient'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { NavigationContext } from '@react-navigation/native'
 import Validator from '../../../utils/validator'
@@ -221,6 +222,19 @@ class Index extends Component {
                         imageUrls={albumList}
                         index={albumIndex}></ImageViewer>
                 </Modal>
+                <TouchableOpacity
+                    onPress={() => this.context.navigate("GroupRecommentCommentPublish")}
+                    style={styles.publishBtnContainer}
+                >
+                    <LinearGradient
+                        colors={['#da6c8b', '#9b65cc']}
+                        star={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={styles.publishBtn}
+                    >
+                        <Text style={styles.publishBtnText}>发布</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
             </>
         )
     }
@@ -291,6 +305,22 @@ const styles = StyleSheet.create({
     noMoreDataText: {
         color: "#666",
         fontSize: pxToDp(12)
+    },
+    publishBtnContainer: {
+        position: "absolute",
+        right: "10%",
+        bottom: "10%"
+    },
+    publishBtn: {
+        width: pxToDp(60),
+        height: pxToDp(60),
+        borderRadius: pxToDp(30),
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    publishBtnText: {
+        color: "white",
+        fontSize: pxToDp(16)
     }
 
 })

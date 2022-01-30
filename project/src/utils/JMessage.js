@@ -2,10 +2,11 @@
  * @Author: atdow
  * @Date: 2022-01-01 00:53:57
  * @LastEditors: null
- * @LastEditTime: 2022-01-15 23:32:46
+ * @LastEditTime: 2022-01-31 01:01:39
  * @Description: file description
  */
 import JMessage from "jmessage-react-plugin"
+import { Toast } from 'teaset'
 export default {
     init() {
         JMessage.init({
@@ -74,6 +75,18 @@ export default {
                 path,
                 extras
             }, resolve, reject)
+        })
+    },
+    /**
+     * 获取昂前登录用户的未读信息
+     */
+    getConversations() {
+        Toast.showLoading("获取中")
+        return new Promise((resolve, reject) => {
+            JMessage.getConversations(res => {
+                Toast.hideLoading()
+                resolve(res)
+            }, reject)
         })
     }
 }

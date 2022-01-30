@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:05:31
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 17:08:41
+ * @LastEditTime: 2022-01-30 22:46:27
  * @Description: file description
  */
 var express = require("express");
@@ -168,6 +168,47 @@ router.post("/trend/submit", function (req, res) {
     res.status(200)
     res.send({
         code: 200,
+        msg: "请求成功"
+    })
+})
+
+router.get("/latest", function (req, res) {
+    const { pageNo = 1, pageSize = 3 } = req.query
+    // console.log("req.query:", req.query)
+    res.status(200)
+    let data = []
+    for (var i = 0; i < pageSize; i++) {
+        data.push(
+            {
+                id: 'userId2',
+                username: "userId2",
+                mobile: 14716111111,
+                header: girlImgList[1],
+                nick_name: "lisa",
+                gender: "女",
+                age: 19,
+                marry: "单身",
+                education: "本科",
+                dist: 0,
+                tid: pageSize * pageNo + i,
+                cid: pageSize * pageNo + i,
+                content: `/{Delightful}心中百般酸楚千般感受也抵不过你/{Delightful}在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利/{Delightful}。`,
+                start_count: 1,
+                comment_count: 0,
+                like_count: 1,
+                create_time: "2021-11-11T07:22:22.000Z",
+                agediff: 0,
+                images: girlImgList
+            }
+        )
+    }
+    res.send({
+        code: 200,
+        data: data,
+        pageNo: 1,
+        totalPages: 3,
+        counts: 3,
+        pageSize: pageSize,
         msg: "请求成功"
     })
 })
