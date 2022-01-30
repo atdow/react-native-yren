@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-19 21:25:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 17:06:58
+ * @LastEditTime: 2022-01-30 20:10:20
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -118,7 +118,7 @@ class Index extends Component {
         // console.log("imageContent:", imageContent)
         const parmas = { textContent, location, longitute, latitude, imageContent }
         submitGroupDynamic(parmas).then(res => {
-            console.log("res:", res)
+            // console.log("res:", res)
             Toast.smile("发布动态成功", "center")
             setTimeout(() => {
                 // navigate 或者 goBack 都错误

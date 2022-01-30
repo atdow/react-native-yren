@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 01:59:40
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 17:46:10
+ * @LastEditTime: 2022-01-30 17:57:40
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -129,13 +129,13 @@ class Index extends Component {
             } else if (listItem.image) {
                 return <Image source={EMOTIONS_DATA[listItem.image]}
                     key={listIndex}
-                    style={{ width: pxToDp(25), height: pxToDp(25) }}
+                    style={{ width: pxToDp(20), height: pxToDp(20) }}
                 ></Image>
             } else {
                 return <></>
             }
         })
-        console.log("content:", content)
+        // console.log("content:", content)
         return content
     }
     render() {
