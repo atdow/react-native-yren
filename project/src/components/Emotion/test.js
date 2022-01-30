@@ -1,20 +1,13 @@
 /*
  * @Author: atdow
- * @Date: 2021-12-25 23:24:37
+ * @Date: 2022-01-30 17:19:26
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 17:31:17
+ * @LastEditTime: 2022-01-30 17:30:37
  * @Description: file description
  */
-export default {
-    validatePhone(phone) {
-        const reg = /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/;
-        return reg.test(phone)
-    },
-    /**
-     * 匹配富文本
-     * @param {*} text
-     */
-    renderRichText(text) {
+function test() {
+    let text = "/{Delightful}心中百般酸楚千般感受也抵不过你在睡梦中/{Delightful}心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利/{Delightful}一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利/{Delightful}。"
+    function renderRichText(text) {
         const finalList = []
         const rule = /(\/\{.+?\})/g
         const emoArr = text.match(rule)
@@ -32,6 +25,13 @@ export default {
             }
         }
         //  console.log("finalList:", finalList)
-        return finalList
     }
+    renderRichText(text)
+    // [{text:""},{image:"/{Delightful}"}]
+
+
+
+
 }
+
+test()

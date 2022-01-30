@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 01:59:40
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 20:12:10
+ * @LastEditTime: 2022-01-30 17:46:10
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -16,6 +16,8 @@ import { Toast, ActionSheet } from 'teaset'
 import JMessage from '../../../utils/JMessage';
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { NavigationContext } from '@react-navigation/native'
+import Validator from '../../../utils/validator'
+import { EMOTIONS_DATA } from '../../../components/Emotion/datasource'
 @inject("UserStore")
 @observer
 class Index extends Component {
@@ -119,6 +121,23 @@ class Index extends Component {
     goComment = (item) => {
         this.context.navigate("GroupRecommentComment", item)
     }
+    renderRichText = (text) => {
+        const list = Validator.renderRichText(text)
+        let content = list.map((listItem, listIndex) => {
+            if (listItem.text) {
+                return <Text key={listIndex}>{listItem.text}</Text>
+            } else if (listItem.image) {
+                return <Image source={EMOTIONS_DATA[listItem.image]}
+                    key={listIndex}
+                    style={{ width: pxToDp(25), height: pxToDp(25) }}
+                ></Image>
+            } else {
+                return <></>
+            }
+        })
+        console.log("content:", content)
+        return content
+    }
     render() {
         const { list, showAlbum, albumList, albumIndex } = this.state
         return (
@@ -157,8 +176,8 @@ class Index extends Component {
                                         <IconFont name="icongengduo" style={styles.moreIcon}></IconFont>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ paddingTop: pxToDp(8) }}>
-                                    <Text style={{ color: "#666" }}>{item.content}</Text>
+                                <View style={{ paddingTop: pxToDp(8), flexDirection: "row", flexWrap: "wrap", alignItems: "center", }}>
+                                    {this.renderRichText(item.content)}
                                 </View>
                                 <View style={styles.galleryImageContainer}>
                                     {item.images.map((albumItem, albumIndex) => <TouchableOpacity

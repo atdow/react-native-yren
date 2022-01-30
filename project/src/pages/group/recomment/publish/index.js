@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-19 21:25:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 00:20:46
+ * @LastEditTime: 2022-01-30 17:06:58
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -15,6 +15,8 @@ import Toast from '../../../../utils/Toast'
 import ImagePicker from 'react-native-image-picker';
 import { ActionSheet } from 'teaset'
 import Emotion from '../../../../components/Emotion'
+import { uploadImage } from '../../../../api/common'
+import { submitGroupDynamic } from '../../../../api/group'
 class Index extends Component {
     constructor() {
         super();
@@ -106,6 +108,49 @@ class Index extends Component {
     showEmotionChange = () => {
         this.setState({ showEmotion: !this.state.showEmotion })
     }
+    submit = async () => {
+        const { textContent, location, longitute, latitude } = this.state
+        if (!textContent || !location || !longitute || !latitude) {
+            Toast.smile("请完善动态信息哦", "center")
+            return
+        }
+        const imageContent = await this.uploadImage()
+        // console.log("imageContent:", imageContent)
+        const parmas = { textContent, location, longitute, latitude, imageContent }
+        submitGroupDynamic(parmas).then(res => {
+            console.log("res:", res)
+            Toast.smile("发布动态成功", "center")
+            setTimeout(() => {
+                // navigate 或者 goBack 都错误
+                // 1 tabbar -› friend -> 圈子group -> 发动态 组件内部生命周期componnetDidMOunt
+                // 2 返回上一个页面 => group-推荐 不会触发 componentsDidmount
+                // 3 返回上一个页面 没有办法在推荐页面 看到最新的动态！！
+                // 4 reset后需要去tabbar中初始化选中状态
+                this.props.navigation.reset({
+                    routes: [{ name: "Tabbar", params: { pagename: "group" } }]
+                })
+            }, 2000);
+        })
+    }
+    uploadImage = async () => {
+        const { tmpImgList } = this.state
+        // console.log("tmpImgList:", tmpImgList)
+        if (tmpImgList.length) {
+            const params = new FormData()
+            tmpImgList.forEach(tmpImgListItem => {
+                const imgObj = {
+                    uri: "file//" + tmpImgListItem.path,
+                    name: tmpImgListItem.fileName,
+                    type: "application/octet-stream"
+                }
+                params.append("images", imgObj)
+            })
+            const res = await uploadImage(params)
+            return Promise.resolve(res.data.map(v => ({ headImgShortPath: v.headImgShortPath })))
+        } else {
+            return Promise.resolve([])
+        }
+    }
     render() {
         const { textContent, location, tmpImgList, showEmotion } = this.state
         return (
@@ -113,7 +158,7 @@ class Index extends Component {
                 <SNav
                     title="发动态"
                     rightText="发帖"
-                    onRightTextPress={() => console.log("1111")}
+                    onRightTextPress={this.submit}
                 ></SNav>
                 <TouchableOpacity
                     onPress={this.setInputFocus}
@@ -159,7 +204,7 @@ class Index extends Component {
                     <TouchableOpacity
                         onPress={this.showEmotionChange}
                         style={{ marginLeft: pxToDp(20), marginRight: pxToDp(20) }}>
-                        <IconFont name="iconbiaoqing" style={{ fontSize: pxToDp(30), color: "#666" }}></IconFont>
+                        <IconFont name="iconbiaoqing" style={{ fontSize: pxToDp(30), color: showEmotion ? "#df6a88" : "#666" }}></IconFont>
                     </TouchableOpacity>
                 </View>
                 {showEmotion ? <Emotion onPress={this.emotionSelect} /> : <></>}

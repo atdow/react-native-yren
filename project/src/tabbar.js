@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 01:29:43
  * @LastEditors: null
- * @LastEditTime: 2022-01-16 03:26:46
+ * @LastEditTime: 2022-01-30 17:04:31
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -57,6 +57,14 @@ class Index extends Component {
                 component: <My />
             },
         ]
+    }
+    constructor(props) {
+        super(props)
+        let selectedTab = "friend"
+        if (this.props.route.params && this.props.route.params.pagename) {
+            selectedTab = this.props.route.params.pagename
+        }
+        this.state.selectedTab = selectedTab
     }
     componentDidMount() {
         getUserInfo().then(res => {

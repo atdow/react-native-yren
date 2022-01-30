@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-16 02:05:31
  * @LastEditors: null
- * @LastEditTime: 2022-01-19 00:22:30
+ * @LastEditTime: 2022-01-30 17:08:41
  * @Description: file description
  */
 var express = require("express");
@@ -42,14 +42,13 @@ router.get("/recommend", function (req, res) {
                 dist: 0,
                 tid: pageSize * pageNo + i,
                 cid: pageSize * pageNo + i,
-                content: `心中百般酸楚千般感受也抵不过你在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利。`,
+                content: `/{Delightful}心中百般酸楚千般感受也抵不过你/{Delightful}在睡梦中一个无意的拥抱。不用羡慕别人有多么幸福。每个人的感情都不顺利/{Delightful}。`,
                 start_count: 1,
                 comment_count: 0,
                 like_count: 1,
                 create_time: "2021-11-11T07:22:22.000Z",
                 agediff: 0,
                 images: girlImgList
-
             }
         )
     }
@@ -161,6 +160,14 @@ router.post("/comment/submit", function (req, res) {
     res.send({
         code: 200,
         // data: data,
+        msg: "请求成功"
+    })
+})
+
+router.post("/trend/submit", function (req, res) {
+    res.status(200)
+    res.send({
+        code: 200,
         msg: "请求成功"
     })
 })

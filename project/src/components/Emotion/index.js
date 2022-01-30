@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-29 23:52:07
  * @LastEditors: null
- * @LastEditTime: 2022-01-30 00:17:12
+ * @LastEditTime: 2022-01-30 11:43:35
  * @Description: file description
  */
 import React, { Component } from 'react';
@@ -11,6 +11,7 @@ import { EMOTIONS_ARR } from './datasource'
 import { screenWidth } from '../../utils/stylesKits'
 class Index extends Component {
     render() {
+        // 屏幕宽度/9
         const width = screenWidth / 9 - 10
         return (
             <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", padding: 4 }}>
