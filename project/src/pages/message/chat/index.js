@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-14 23:44:33
  * @LastEditors: null
- * @LastEditTime: 2022-01-15 23:27:07
+ * @LastEditTime: 2022-02-09 22:26:21
  * @Description: file description
  */
 import React, { Component } from 'react'
@@ -360,6 +360,7 @@ class TestRNIMUI extends Component {
         var evenmessage = constructNormalMessage()
         message.msgType = 'text'
         message.text = text
+        message.fromUser.avatarPath = this.props.UserStore.user.header
         AuroraIController.appendMessages([message])
         // 极光发送消息
         const username = this.props.route.params.username

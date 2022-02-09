@@ -2,12 +2,12 @@
  * @Author: atdow
  * @Date: 2021-12-26 00:07:29
  * @LastEditors: null
- * @LastEditTime: 2022-01-09 23:48:00
+ * @LastEditTime: 2022-02-09 20:45:54
  * @Description: file description
  */
 var express = require("express");
 var router = express.Router()
-
+var imgData = require("../data/img");
 
 router.post("/loginVerification", function (req, res) {
     res.status(200)
@@ -67,6 +67,34 @@ router.post("/loginReginfo", function (req, res) {
         data: {
             msg: "成功"
         }
+    }
+    res.send(data)
+})
+
+router.post("/personalInfo", function (req, res) {
+    // console.log("req:", req.body)
+    res.status(200)
+    let userInfoObj = {
+        id: 'userId2',
+        username: "userId2",
+        mobile: 14716111111,
+        header: imgData.girlImgList[0],
+        nick_name: "iu",
+        gender: "女",
+        age: 18,
+        marry: "单身",
+        education: "本科",
+        dist: 0,
+        agediff: 0,
+        fateValue: 99,
+    }
+    userInfoArr = []
+    for (var i = 0; i < req.body.id.length; i++) {
+        userInfoArr.push(userInfoObj)
+    }
+    let data = {
+        code: 200,
+        data: userInfoArr
     }
     res.send(data)
 })

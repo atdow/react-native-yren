@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:47:51
  * @LastEditors: null
- * @LastEditTime: 2022-01-15 22:23:32
+ * @LastEditTime: 2022-02-09 20:39:41
  * @Description: file description
  */
 var express = require("express");
@@ -480,5 +480,6 @@ router.get("/personalInfo", function (req, res) {
         msg: "请求成功"
     })
 })
+
 
 module.exports = router;

@@ -2,7 +2,7 @@
  * @Author: atdow
  * @Date: 2022-01-01 21:45:11
  * @LastEditors: null
- * @LastEditTime: 2022-01-09 03:22:24
+ * @LastEditTime: 2022-02-09 20:39:12
  * @Description: file description
  */
 import axios from "./request";
@@ -86,4 +86,5 @@ export function getFriendDetail(parameter) {
         params: parameter
     })
 }
+
 

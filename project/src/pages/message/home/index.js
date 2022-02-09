@@ -2,24 +2,39 @@
  * @Author: atdow
  * @Date: 2022-01-01 19:51:26
  * @LastEditors: null
- * @LastEditTime: 2022-01-31 01:03:22
+ * @LastEditTime: 2022-02-09 22:24:50
  * @Description: file description
  */
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import { pxToDp } from '../../../utils/stylesKits'
 import IconFont from '../../../components/IconFont'
 import JMessage from '../../../utils/JMessage';
+import { guidToPersonalInfo } from '../../../api/user'
+import date from '../../../utils/date'
+import { NavigationContext } from '@react-navigation/native'
 class Index extends Component {
+    static contextType = NavigationContext
+    state = {
+        list: []
+    }
     componentDidMount() {
         this.getConversations()
     }
     getConversations = async () => {
         const res = await JMessage.getConversations()
         // console.log("res:", res)
+        if (res.length) {
+            const idArr = res.map(v => v.target.username)
+            // console.log("idArr:", idArr)
+            const users = await guidToPersonalInfo({ id: idArr })
+            // console.log("users:", users)
+            this.setState({ list: res.map((resItem, resIndex) => ({ ...resItem, user: users.data[resIndex] })) })
+        }
     }
     render() {
+        const { list } = this.state
         return (
             <View>
                 <StatusBar
@@ -63,6 +78,28 @@ class Index extends Component {
                         </View>
                         <Text style={styles.tabText}>喜欢</Text>
                     </TouchableOpacity>
+                </View>
+                <View>
+                    {list.map((listItem, listIndex) => <TouchableOpacity
+                        onPress={() => this.context.navigate("Chat", listItem.user)}
+                        key={listIndex} style={{ padding: pxToDp(15), flexDirection: "row", borderBottomWidth: pxToDp(1), borderBottomColor: "#ccc" }}>
+                        <View>
+                            <Image
+                                source={{ uri: listItem.user.header }}
+                                style={{ width: pxToDp(40), height: pxToDp(40), borderRadius: pxToDp(20) }}
+                            ></Image>
+                        </View>
+                        <View style={{ justifyContent: "space-evenly", paddingLeft: pxToDp(15) }}>
+                            <Text style={{ color: "#666" }}>{listItem.user.nick_name}</Text>
+                            <Text style={{ color: "#666" }}>{listItem.latestMessage && listItem.latestMessage.text}</Text>
+                        </View>
+                        <View style={{ flex: 1, alignItems: "flex-end" }}>
+                            <Text style={{ color: "#666" }}>{listItem.latestMessage && date(listItem.latestMessage.createTime).fromNow()}</Text>
+                            <View style={{ width: pxToDp(20), height: pxToDp(20), borderRadius: pxToDp(20), backgroundColor: "red", alignItems: "center", justifyContent: "center" }}>
+                                <Text style={{ color: "white" }}>{listItem.unreadCount}</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>)}
                 </View>
             </View>
         )
